@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <p class="container-fluid">Welcome to your dashboard.</a>
+   
+{% if user.is_authenticated %}
+<!-- Button trigger modal -->
+
+<button type="button" class="btn btn-modal-newpost border-secondary" data-toggle="modal" data-target="#create">What are you thinking, 
+    {% if request.user.first_name %}
+        {{request.user.first_name}}?
+    {% else %}
+        {{request.user.username}}?
+    {% endif %}
+</button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content new-post-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Create Your Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method=post action="{% url 'newpost' username=user.username %}">
+                {% csrf_token %}
+                <textarea rows="10" class="form-control" name="textarea"></textarea>
+                <br>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-dark save" type="submit" value="Create"><i class="fa fa-check-square-o"></i> Create</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

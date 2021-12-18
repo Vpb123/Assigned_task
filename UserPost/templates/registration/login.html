@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+ <h3>Login</h3>
+    {% if form.errors %}
+        <p>
+        Your username and password didn't match.
+        Please try again.
+        </p>
+    {% else %}
+         <p>Please, use the following form to Login:</p>
+    {% endif %}
+
+<div class="card container">
+<article class="card-body">
+<a href="{% url "register" %}" class="float-right btn btn-outline-primary" >Sign up</a>
+<h4 class="card-title mb-4 mt-1">Sign in</h4>
+	 <form action="{% url 'login' %}" method="post">
+    <div class="form-group">
+    	<label>Username</label>
+        <input name="username" class="form-control" placeholder="username" type="text">
+    </div> 
+    <div class="form-group">
+    	<a class="float-right" href="#">Forgot?</a>
+    	<label>Your password</label>
+        <input name="password" class="form-control" placeholder="******" type="password">
+    </div> 
+    <div class="form-group"> 
+    <div class="checkbox">
+      <label> <input type="checkbox"> Save password </label>
+    </div> 
+    </div>  
+    <div class="form-group">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+        <input type="submit" class="btn btn-primary btn-block" name="Login" placeholder="Login" />
+    </div>                                                           
+</form>
+</article>
+</div>
+{% endblock %}
